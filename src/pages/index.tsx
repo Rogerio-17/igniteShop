@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { HomeContainer, Product } from "../styles/pages/home";
+import Link from "next/link";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
@@ -13,12 +14,10 @@ interface HomeProps {
     name: string;
     imageUrl: string;
     price: number;
-  }[]
+  }[];
 }
 
-
-export default function Home({products}:HomeProps) {
-  
+export default function Home({ products }: HomeProps) {
   const [slideRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -28,52 +27,49 @@ export default function Home({products}:HomeProps) {
 
   return (
     <HomeContainer ref={slideRef} className="keen-slider">
-      
-      {
-        products.map(product => {
-          return(
-            <Product key={product.id} className="keen-slider__slide">
-              <Image src={product.imageUrl} width={520} height={520}/>
+      {products.map((product) => {
+        return (
+          <Link href={`/product/${product.id}`} key={product.id}>
+            <Product className="keen-slider__slide">
+              <Image src={product.imageUrl} width={520} height={520} alt=""/>
 
               <footer>
                 <strong>{product.name}</strong>
                 <span>{product.price}</span>
               </footer>
             </Product>
-          )
-        })
-      }
+          </Link>
+        );
+      })}
     </HomeContainer>
   );
 }
 
-
 export const getStaticProps: GetStaticProps = async () => {
   const response = await stripe.products.list({
-    expand: ['data.default_price'],
-    active: true
-  })
+    expand: ["data.default_price"],
+    active: true,
+  });
 
-  const products = response.data.map(product => {
-    const price = product.default_price as Stripe.Price
+  const products = response.data.map((product) => {
+    const price = product.default_price as Stripe.Price;
 
-    return{
+    return {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
+      price: new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(6990 / 100)
-    }
-  })
+      }).format(6990 / 100),
+    };
+  });
 
-
-  return{
+  return {
     props: {
-      products
+      products,
     },
 
-    revalidate: 60 * 60 * 2 / 2, //2 Hours
-  }
-}
+    revalidate: (60 * 60 * 2) / 2, //2 Hours
+  };
+};
