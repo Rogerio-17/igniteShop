@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 import { stripe } from "../../lib/stripe";
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
     return res.status(400).json({ error: "Price not found" });
   }
 
-  const successUrl = `${process.env.NEXT_URL}/success`;
+  const successUrl = `${process.env.NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`;
   const cancelUrl = `${process.env.NEXT_URL}/`;
 
   const checkoutSession = await stripe.checkout.sessions.create({
@@ -33,4 +33,15 @@ export default async function handler(
   return res.status(201).json({
     checkoutUrl: checkoutSession.url,
   });
+}
+
+
+export const getServerSideProps: GetServerSideProps = async({query}) => {
+    const { session_id: sessionId } = query;
+
+    return{
+        props: {
+            
+        }
+    }
 }
