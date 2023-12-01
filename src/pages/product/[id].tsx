@@ -19,32 +19,31 @@ interface ProductProps {
     price: string;
     description: string;
     priceId: string;
-  }
+  };
 }
 
-export default function Product({product}: ProductProps) {
-  const { isFallback } = useRouter()
-  const [isloading, setIsLoading] = useState(false)
+export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter();
+  const [isloading, setIsLoading] = useState(false);
 
-  if(isFallback) {
-    return <p>Loading...</p>
+  if (isFallback) {
+    return <p>Loading...</p>;
   }
 
   async function handleBuyProduct() {
     try {
-      setIsLoading(true)
-       const response = await axios.post('/api/checkout', {
-        priceId: product.priceId
-       })
+      setIsLoading(true);
+      const response = await axios.post("/api/checkout", {
+        priceId: product.priceId,
+      });
 
-       const { checkoutUrl } = response.data
+      const { checkoutUrl } = response.data;
 
-       // Para quando for direcionar o cliente para algum link fora da aplicação.
-       window.location.href = checkoutUrl
-
-    } catch(err){
-      setIsLoading(false)
-      alert('Falha ao redirecionar ao checckout!')
+      // Para quando for direcionar o cliente para algum link fora da aplicação.
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      setIsLoading(false);
+      alert("Falha ao redirecionar ao checckout!");
     }
   }
 
@@ -58,42 +57,42 @@ export default function Product({product}: ProductProps) {
         <h1>{product.name}</h1>
         <span>{product.price}</span>
 
-        <p>
-          {product.description}
-        </p>
+        <p>{product.description}</p>
 
-        <button disabled={isloading} onClick={handleBuyProduct}>{ isloading ?' Carregando...' : 'Comprar agora'}</button>
+        <button disabled={isloading} onClick={handleBuyProduct}>
+          {isloading ? " Carregando..." : "Comprar agora"}
+        </button>
       </ProductDetails>
     </ProductContainer>
   );
 }
 
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  return{
-    paths: [
-      {params: {id: 'prod_P2kTKfHwQ7D2ek'}}
-    ],
+  return {
+    paths: [{ params: { id: "prod_P2kTKfHwQ7D2ek" } }],
     fallback: true,
-  }
-}
+  };
+};
 
-
-export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}) => {
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
+  params,
+}) => {
   const productId = params.id;
 
   const product = await stripe.products.retrieve(productId, {
-    expand: ['default_price']
-  })
+    expand: ["default_price"],
+  });
 
   const prices = await stripe.prices.list({
-    active: true
-  })
+    active: true,
+  });
 
-  const priceSelected = prices.data.filter((price) => price.product === productId)
-  const priceId = priceSelected[0].id
+  const priceSelected = prices.data.filter(
+    (price) => price.product === productId
+  );
+  const priceId = priceSelected[0].id;
 
-  return{
+  return {
     props: {
       product: {
         id: product.id,
@@ -102,11 +101,11 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}
         price: new Intl.NumberFormat("pt-BR", {
           style: "currency",
           currency: "BRL",
-        }).format(6990 / 100),
+        }).format(Number(priceSelected[0].unit_amount_decimal) / 100),
         description: product.description,
         priceId: priceId,
-      }
+      },
     },
-    revalidate: 60 * 60 * 1 // 1 hour
-  }
-}
+    revalidate: 60 * 60 * 1, // 1 hour
+  };
+};

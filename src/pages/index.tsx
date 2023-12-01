@@ -29,9 +29,13 @@ export default function Home({ products }: HomeProps) {
     <HomeContainer ref={slideRef} className="keen-slider">
       {products.map((product) => {
         return (
-          <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
+          <Link
+            href={`/product/${product.id}`}
+            key={product.id}
+            prefetch={false}
+          >
             <Product className="keen-slider__slide">
-              <Image src={product.imageUrl} width={520} height={520} alt=""/>
+              <Image src={product.imageUrl} width={520} height={520} alt="" />
 
               <footer>
                 <strong>{product.name}</strong>
@@ -51,9 +55,15 @@ export const getStaticProps: GetStaticProps = async () => {
     active: true,
   });
 
-  const products = response.data.map((product) => {
-    const price = product.default_price as Stripe.Price;
+  const prices = await stripe.prices.list({
+    active: true,
+  });
 
+  const products = response.data.map((product) => {
+    const priceSelected = prices.data.filter(
+      (price) => price.product === product.id
+    );
+    const price = priceSelected[0].unit_amount_decimal;
     return {
       id: product.id,
       name: product.name,
@@ -61,7 +71,7 @@ export const getStaticProps: GetStaticProps = async () => {
       price: new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(6990 / 100),
+      }).format(Number(price) / 100),
     };
   });
 
