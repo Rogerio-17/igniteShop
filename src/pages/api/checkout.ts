@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { stripe } from "../../lib/stripe";
 
 export default async function handler(
@@ -35,13 +35,3 @@ export default async function handler(
   });
 }
 
-
-export const getServerSideProps: GetServerSideProps = async({query}) => {
-    const { session_id: sessionId } = query;
-
-    return{
-        props: {
-            
-        }
-    }
-}
