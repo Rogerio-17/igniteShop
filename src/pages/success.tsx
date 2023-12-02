@@ -24,7 +24,7 @@ export default function Success({ customerName, product }: SuccessProps) {
       </Head>
 
       <SuccessContainer>
-        <h1>Compra efetuada</h1>
+        <h1>Compra efetuada!</h1>
 
         <ImageContainer>
           <Image src={product.imageUrl} alt="" width={120} height={120}></Image>
@@ -33,7 +33,7 @@ export default function Success({ customerName, product }: SuccessProps) {
           Uhuul <strong>{customerName}</strong>, sua{" "}
           <strong>{product.name}</strong> já está a caminho da sua casa.
         </p>
-        <Link href="/">Voltar ao catalogo</Link>
+        <Link href="/"> Voltar ao catalogo </Link>
       </SuccessContainer>
     </>
   );
