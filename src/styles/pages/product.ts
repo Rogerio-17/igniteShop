@@ -14,7 +14,7 @@ export const ProductContainer = styled('main', {
 export const ImageContainer = styled('div', {
     width: '100%',
     maxWidth: 576,
-    height: 656,
+    maxHeight: 656,
     background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
     borderRadius: 8,
     padding: '0.25rem',
@@ -73,5 +73,42 @@ export const ProductDetails = styled('div', {
         }
     }
 
+
+})
+
+
+export const LoadPage = styled('div', {
+    maxWidth: 1180,
+    margin: '0 auto',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '4rem',
+
+    '.main': {
+        width: '528px',
+        height: '34.875rem',
+        background: '$gray800',
+        borderRadius: 8,
+    },
+
+    '.secondary': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+
+    '.information': {
+        width: '528px',
+        height: '14.875rem',
+        background: '$gray800',
+        borderRadius: 8
+    },
+
+    '.bnt': {
+        width: '528px',
+        height: '3.875rem',
+        background: '$gray800',
+        borderRadius: 8,
+    },
 
 })

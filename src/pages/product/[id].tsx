@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import {
   ImageContainer,
+  LoadPage,
   ProductContainer,
   ProductDetails,
 } from "../../styles/pages/product";
@@ -27,7 +28,15 @@ export default function Product({ product }: ProductProps) {
   const [isloading, setIsLoading] = useState(false);
 
   if (isFallback) {
-    return <p>Loading...</p>;
+    return (
+      <LoadPage>
+        <div className="main"></div>
+        <div className="secondary">
+          <div className="information"></div>
+          <div className="bnt"></div>
+        </div>
+      </LoadPage>
+    );
   }
 
   async function handleBuyProduct() {
