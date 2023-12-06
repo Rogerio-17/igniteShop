@@ -7,7 +7,8 @@ import "keen-slider/keen-slider.min.css";
 import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { Handbag } from "phosphor-react";
+import { CartButton } from "../components/CartButton";
+import { useCart } from "../hook/userCart";
 
 interface HomeProps {
   products: {
@@ -18,6 +19,13 @@ interface HomeProps {
   }[];
 }
 
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: string;
+}
+
 export default function Home({ products }: HomeProps) {
   const [slideRef] = useKeenSlider({
     slides: {
@@ -25,6 +33,12 @@ export default function Home({ products }: HomeProps) {
       spacing: 48,
     },
   });
+
+  const { addItemInCart } = useCart()
+
+ function handleAddProduct(product: Product) {
+  addItemInCart(product)
+ }
 
   return (
     <>
@@ -49,9 +63,7 @@ export default function Home({ products }: HomeProps) {
                     <span>{product.price}</span>
                   </div>
 
-                  <button>
-                    <Handbag size={24} weight="bold"></Handbag>
-                  </button>
+                  <CartButton onClick={() => handleAddProduct(product)}></CartButton>
                 </footer>
               </Product>
             </Link>
