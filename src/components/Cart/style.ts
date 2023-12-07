@@ -17,6 +17,18 @@ export const CartContent = styled(Dialog.Content, {
     h2: {
         marginBottom: "2rem"
     },
+
+    main: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2rem',
+        
+
+        section: {
+            height: '65vh',
+            overflowY: 'auto',
+        }
+    },
     
     footer: {
         display: 'flex',
@@ -35,7 +47,6 @@ export const CartContent = styled(Dialog.Content, {
         '.value': {
             fontSize: '$lg'
         },
-
        
 
         button: {
@@ -44,6 +55,12 @@ export const CartContent = styled(Dialog.Content, {
             border: 'none',
             background: '$green500',
             color: '$white',
+            cursor: 'pointer',
+
+            '&:hover': {
+                transition: '0.3s',
+                background: '$green300',
+            }
 
         }
     }

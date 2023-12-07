@@ -19,25 +19,30 @@ export function Cart() {
 
                     <h2>Sacola de compras</h2>
 
+                    <main>
                     <section>
                         <ItemInCart></ItemInCart>
                         <ItemInCart></ItemInCart>
                         <ItemInCart></ItemInCart>
                         <ItemInCart></ItemInCart>
+                        <ItemInCart></ItemInCart>
+                        <ItemInCart></ItemInCart>
+
                     </section>
 
-                    <footer>
-                        <div className='quantity'>
+                      <footer>
+                          <div className='quantity'>
                             <p>Quantidade</p>
                             <span>3 itens</span>
-                        </div>
-                        <div className='value'>
+                          </div>
+                          <div className='value'>
                             <p>Valor total</p>
                             <span>R$ 270,00</span>
-                        </div>
+                          </div>
 
-                        <button>Finalizar Compra</button>
-                    </footer>
+                          <button>Finalizar Compra</button>
+                       </footer>
+                    </main>
                 </CartContent>
             </Dialog.Portal>
         </Dialog.Root>
