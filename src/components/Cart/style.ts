@@ -14,6 +14,40 @@ export const CartContent = styled(Dialog.Content, {
     display: 'flex',
     flexDirection: 'column',
 
+    h2: {
+        marginBottom: "2rem"
+    },
+    
+    footer: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+
+        div: {
+            display: 'flex',
+            justifyContent: 'space-between'
+        },
+
+        '.quantity': {
+            fontSize: '0.9rem'
+        },
+
+        '.value': {
+            fontSize: '$lg'
+        },
+
+       
+
+        button: {
+            padding: '0.8rem',
+            borderRadius: 8,
+            border: 'none',
+            background: '$green500',
+            color: '$white',
+
+        }
+    }
+
 });
 
 export const CartClose = styled(Dialog.Close, {

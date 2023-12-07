@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { CartClose, CartContent } from './style'
 import { X } from 'phosphor-react'
 import { CartButton } from '../CartButton'
+import { ItemInCart } from './intemInCart'
 
 export function Cart() {
     return(
@@ -19,8 +20,24 @@ export function Cart() {
                     <h2>Sacola de compras</h2>
 
                     <section>
-                        <p>Carrinho está vazio :(</p>
+                        <ItemInCart></ItemInCart>
+                        <ItemInCart></ItemInCart>
+                        <ItemInCart></ItemInCart>
+                        <ItemInCart></ItemInCart>
                     </section>
+
+                    <footer>
+                        <div className='quantity'>
+                            <p>Quantidade</p>
+                            <span>3 itens</span>
+                        </div>
+                        <div className='value'>
+                            <p>Valor total</p>
+                            <span>R$ 270,00</span>
+                        </div>
+
+                        <button>Finalizar Compra</button>
+                    </footer>
                 </CartContent>
             </Dialog.Portal>
         </Dialog.Root>
