@@ -33,6 +33,7 @@ export const CartContent = styled(Dialog.Content, {
     footer: {
         display: 'flex',
         flexDirection: 'column',
+        marginTop: 'auto',
         gap: '0.5rem',
 
         div: {
