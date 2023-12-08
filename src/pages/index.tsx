@@ -9,21 +9,11 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { CartButton } from "../components/CartButton";
 import { useCart } from "../hook/userCart";
+import { IProduct } from "../context/CartShop";
+import { formatMoney } from "../utils/FormatterPrice";
 
 interface HomeProps {
-  products: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    price: string;
-  }[];
-}
-
-interface Product {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: string;
+  products: IProduct[]
 }
 
 export default function Home({ products }: HomeProps) {
@@ -34,10 +24,12 @@ export default function Home({ products }: HomeProps) {
     },
   });
 
-  const { addItemInCart } = useCart()
+ const { addItemInCart } = useCart()
 
- function handleAddProduct(product: Product) {
+ function handleAddProduct(e:MouseEvent<HTMLButtonElement>, product: IProduct) {
+  e.preventDefault()
   addItemInCart(product)
+  // Adiconar algo para deixar o usuario ciente que foi feito aadição do item no carrinho
  }
 
   return (
@@ -60,10 +52,10 @@ export default function Home({ products }: HomeProps) {
                 <footer>
                   <div>
                     <strong>{product.name}</strong>
-                    <span>{product.price}</span>
+                    <span>{formatMoney(product.price)}</span>
                   </div>
 
-                  <CartButton onClick={() => handleAddProduct(product)}></CartButton>
+                  <CartButton onClick={(e) => handleAddProduct(e, product)}></CartButton>
                 </footer>
               </Product>
             </Link>
@@ -89,16 +81,17 @@ export const getStaticProps: GetStaticProps = async () => {
       (price) => price.product === product.id
     );
     const price = priceSelected[0].unit_amount_decimal;
+
     return {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(Number(price) / 100),
-    };
+      price: price,
+      description: product.description,
+      priceId: priceSelected[0].id
+    }
   });
+
 
   return {
     props: {

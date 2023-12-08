@@ -1,16 +1,17 @@
-import { produce } from "immer";
 import { ReactNode, createContext, useState } from "react";
 
-interface CartItem {
+export interface IProduct {
   id: number;
   name: string;
   imageUrl: string;
-  price: string;
+  price: number;
+  description: string;
+  priceId: string;
 }
 
 interface CartContextType {
-    cartItems: CartItem[];
-    addItemInCart: (product: CartItem) => void;
+    cartItems: IProduct[];
+    addItemInCart: (product: IProduct) => void;
 }
 
 interface CartContentProviderProps {
@@ -20,15 +21,13 @@ interface CartContentProviderProps {
 export const CartContext = createContext({} as CartContextType);
 
 export function CartContextProvider({ children }: CartContentProviderProps) {
-  const [cartItems, setCartItem] = useState<CartItem[]>();
+  const [cartItems, setCartItem] = useState<IProduct[]>([]);
 
-  function addItemInCart(data: CartItem) {
-    const newItemCart = produce(cartItems, (draft) => {
-        draft.push(data)
-    })
-
-    console.log(newItemCart)
+  function addItemInCart(product: IProduct) {
+    setCartItem((state) => [...state, product])
   }
+
+  console.log(cartItems)
 
   
 

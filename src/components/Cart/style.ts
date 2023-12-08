@@ -25,7 +25,7 @@ export const CartContent = styled(Dialog.Content, {
         
 
         section: {
-            height: '65vh',
+            height: '60vh',
             overflowY: 'auto',
         }
     },

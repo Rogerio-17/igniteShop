@@ -3,8 +3,21 @@ import { CartClose, CartContent } from './style'
 import { X } from 'phosphor-react'
 import { CartButton } from '../CartButton'
 import { ItemInCart } from './intemInCart'
+import { useCart } from '../../hook/userCart'
+import { formatMoney } from '../../utils/FormatterPrice'
 
 export function Cart() {
+    const { cartItems } = useCart()
+    const quantity = cartItems.length
+
+    const prices = cartItems.map((product) => {
+        const priceTotal = product.price * 1
+        return priceTotal
+      })
+
+    const totalPrices = prices.reduce((a, b) => a + b, 0)
+    const totalPricesF = formatMoney(totalPrices)
+
     return(
         <Dialog.Root>
             <Dialog.Trigger asChild>
@@ -21,23 +34,21 @@ export function Cart() {
 
                     <main>
                     <section>
-                        <ItemInCart></ItemInCart>
-                        <ItemInCart></ItemInCart>
-                        <ItemInCart></ItemInCart>
-                        <ItemInCart></ItemInCart>
-                        <ItemInCart></ItemInCart>
-                        <ItemInCart></ItemInCart>
-
+                        {
+                            cartItems.map((product) => (
+                                <ItemInCart key={product.id} product={product}></ItemInCart>
+                            ))
+                        }
                     </section>
 
                       <footer>
                           <div className='quantity'>
                             <p>Quantidade</p>
-                            <span>3 itens</span>
+                            <span>{quantity} itens</span>
                           </div>
                           <div className='value'>
                             <p>Valor total</p>
-                            <span>R$ 270,00</span>
+                            <span>{totalPricesF}</span>
                           </div>
 
                           <button>Finalizar Compra</button>

@@ -1,15 +1,23 @@
 import Image from "next/image";
 import { ItemsContainer } from "./style";
 import img from '../../../assets/camisetas/explorer.png'
+import { IProduct } from "../../../context/CartShop";
+import { formatMoney } from "../../../utils/FormatterPrice";
 
-export function ItemInCart() {
+interface Product {
+    product: IProduct
+}
+
+export function ItemInCart({product}: Product) {
+    const priceFormated = formatMoney(product.price)
+
     return(
         <ItemsContainer>
-            <Image src={img} alt=""></Image>
+            <Image src={product.imageUrl} alt="" width={102} height={102}></Image>
 
             <div>
-                <p>Camiseta Maratona Explorer</p>
-                <span>R$ 69,90</span>
+                <p>{product.name}</p>
+                <span>{priceFormated}</span>
                 <button>Remover</button>
             </div>
         </ItemsContainer>
