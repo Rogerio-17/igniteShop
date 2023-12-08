@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { ItemsContainer } from "./style";
-import img from '../../../assets/camisetas/explorer.png'
 import { IProduct } from "../../../context/CartShop";
 import { formatMoney } from "../../../utils/FormatterPrice";
+import { useCart } from "../../../hook/userCart";
 
 interface Product {
     product: IProduct
@@ -10,6 +10,11 @@ interface Product {
 
 export function ItemInCart({product}: Product) {
     const priceFormated = formatMoney(product.price)
+    const {removeProduct} = useCart()
+
+    function handleDeleteProduct(product: IProduct) {
+        removeProduct(product)
+    }
 
     return(
         <ItemsContainer>
@@ -18,7 +23,7 @@ export function ItemInCart({product}: Product) {
             <div>
                 <p>{product.name}</p>
                 <span>{priceFormated}</span>
-                <button>Remover</button>
+                <button onClick={() => handleDeleteProduct(product)}>Remover</button>
             </div>
         </ItemsContainer>
     )

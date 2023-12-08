@@ -24,7 +24,7 @@ export default function Home({ products }: HomeProps) {
     },
   });
 
- const { addItemInCart } = useCart()
+ const { addItemInCart, cartItems } = useCart()
 
  function handleAddProduct(e:MouseEvent<HTMLButtonElement>, product: IProduct) {
   e.preventDefault()
@@ -55,7 +55,7 @@ export default function Home({ products }: HomeProps) {
                     <span>{formatMoney(product.price)}</span>
                   </div>
 
-                  <CartButton onClick={(e) => handleAddProduct(e, product)}></CartButton>
+                  <CartButton disabled={(cartItems.findIndex((item) => product.id === item.id)) != -1} onClick={(e) => handleAddProduct(e, product)}></CartButton>
                 </footer>
               </Product>
             </Link>
@@ -88,7 +88,8 @@ export const getStaticProps: GetStaticProps = async () => {
       imageUrl: product.images[0],
       price: price,
       description: product.description,
-      priceId: priceSelected[0].id
+      priceId: priceSelected[0].id,
+      productExist: false,
     }
   });
 

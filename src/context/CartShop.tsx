@@ -7,11 +7,13 @@ export interface IProduct {
   price: number;
   description: string;
   priceId: string;
+  productExist: boolean;
 }
 
 interface CartContextType {
     cartItems: IProduct[];
     addItemInCart: (product: IProduct) => void;
+    removeProduct: (product: IProduct) => void;
 }
 
 interface CartContentProviderProps {
@@ -24,10 +26,24 @@ export function CartContextProvider({ children }: CartContentProviderProps) {
   const [cartItems, setCartItem] = useState<IProduct[]>([]);
 
   function addItemInCart(product: IProduct) {
-    setCartItem((state) => [...state, product])
+    const newProduct = {
+      id: product.id,
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      description: product.description,
+      priceId: product.priceId,
+      productExist: true,
+    }
+
+    setCartItem((state) => [...state, newProduct])
+
   }
 
-  console.log(cartItems)
+  function removeProduct(product: IProduct) {
+    const productDeleted = cartItems.filter((item) => item.id !== product.id)
+    setCartItem(productDeleted)
+  }
 
   
 
@@ -35,5 +51,6 @@ export function CartContextProvider({ children }: CartContentProviderProps) {
   value={{
     cartItems,
     addItemInCart,
+    removeProduct,
   }}>{children}</CartContext.Provider>;
 }

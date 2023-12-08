@@ -35,9 +35,11 @@ export function Cart() {
                     <main>
                     <section>
                         {
-                            cartItems.map((product) => (
-                                <ItemInCart key={product.id} product={product}></ItemInCart>
-                            ))
+                         cartItems.length <= 0 ? <p>Sacola está vazia :(</p> :
+
+                         cartItems.map((product) => (
+                            <ItemInCart key={product.id} product={product}></ItemInCart>
+                         ))
                         }
                     </section>
 
