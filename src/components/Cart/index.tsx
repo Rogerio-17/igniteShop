@@ -55,7 +55,7 @@ export function Cart() {
                             <span>{totalPricesF}</span>
                           </div>
 
-                          <button>Finalizar Compra</button>
+                          <button disabled={quantity <= 0}>Finalizar Compra</button>
                        </footer>
                     </main>
                 </CartContent>
