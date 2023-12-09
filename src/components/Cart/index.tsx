@@ -18,6 +18,8 @@ export function Cart() {
     const totalPrices = prices.reduce((a, b) => a + b, 0)
     const totalPricesF = formatMoney(totalPrices)
 
+    // Quando a sacola estiver vazia deixa o botão desabilitado ----------- ATENÇÃO!!!!!!!! ------------
+
     return(
         <Dialog.Root>
             <Dialog.Trigger asChild>

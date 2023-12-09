@@ -11,6 +11,9 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useState } from "react";
 import Head from "next/head";
+import { useCart } from "../../hook/userCart";
+import { IProduct } from "../../context/CartShop";
+import { formatMoney } from "../../utils/FormatterPrice";
 
 interface ProductProps {
   product: {
@@ -23,9 +26,12 @@ interface ProductProps {
   };
 }
 
-export default function Product({ product }: ProductProps) {
+export default function Product(product: IProduct) {
   const { isFallback } = useRouter();
-  const [isloading, setIsLoading] = useState(false);
+  const { cartItems, addItemInCart } = useCart()
+
+  const productInCart = (cartItems.findIndex((item) => product.id === item.id)) != -1
+  const priceFormated = formatMoney(product.price)
 
   if (isFallback) {
     return (
@@ -39,6 +45,11 @@ export default function Product({ product }: ProductProps) {
     );
   }
 
+  function handleAddProduct() {
+    addItemInCart(product)
+  }
+
+/*
   async function handleBuyProduct() {
     try {
       setIsLoading(true);
@@ -55,6 +66,7 @@ export default function Product({ product }: ProductProps) {
       alert("Falha ao redirecionar ao checckout!");
     }
   }
+*/
 
   return (
     <>
@@ -69,13 +81,11 @@ export default function Product({ product }: ProductProps) {
 
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <span>{priceFormated}</span>
 
           <p>{product.description}</p>
 
-          <button disabled={isloading} onClick={handleBuyProduct}>
-            {isloading ? " Carregando..." : "Comprar agora"}
-          </button>
+          <button disabled={productInCart} onClick={handleAddProduct}>Colocar na sacola</button>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -109,17 +119,12 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
 
   return {
     props: {
-      product: {
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(Number(priceSelected[0].unit_amount_decimal) / 100),
+        price: priceSelected[0].unit_amount_decimal,
         description: product.description,
         priceId: priceId,
-      },
     },
     revalidate: 60 * 60 * 1, // 1 hour
   };

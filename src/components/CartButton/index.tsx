@@ -8,6 +8,7 @@ export function CartButton({...rest}: CartButtonProps) {
     return(
         <CartButtonContainer {...rest}>
             <Handbag weight="bold"/>
+            
         </CartButtonContainer>
     )
 }

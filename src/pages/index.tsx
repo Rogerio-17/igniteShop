@@ -46,7 +46,7 @@ export default function Home({ products }: HomeProps) {
               key={product.id}
               prefetch={false}
             >
-              <Product className="keen-slider__slide">
+              <Product className="keen-slider__slide" >
                 <Image src={product.imageUrl} width={520} height={520} alt="" />
 
                 <footer>
