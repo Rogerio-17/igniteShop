@@ -5,6 +5,9 @@ import { CartButton } from '../CartButton'
 import { ItemInCart } from './intemInCart'
 import { useCart } from '../../hook/userCart'
 import { formatMoney } from '../../utils/FormatterPrice'
+import { useState } from 'react'
+import axios from 'axios'
+import Product from '../../pages/product/[id]'
 
 export function Cart() {
     const { cartItems } = useCart()
@@ -18,7 +21,25 @@ export function Cart() {
     const totalPrices = prices.reduce((a, b) => a + b, 0)
     const totalPricesF = formatMoney(totalPrices)
 
-    // Quando a sacola estiver vazia deixa o botão desabilitado ----------- ATENÇÃO!!!!!!!! ------------
+    const ids = cartItems.map((p) => {
+        p.id
+    })
+
+    async function handleBuyProduct() {
+
+        try {
+          const response = await axios.post("/api/checkout", {
+            priceId: 'testts'
+          });
+    
+          const { checkoutUrl } = response.data;
+    
+          // Para quando for direcionar o cliente para algum link fora da aplicação.
+          window.location.href = checkoutUrl;
+        } catch (err) {
+          alert("Falha ao redirecionar ao checckout!");
+        }
+      }
 
     return(
         <Dialog.Root>
@@ -55,7 +76,7 @@ export function Cart() {
                             <span>{totalPricesF}</span>
                           </div>
 
-                          <button disabled={quantity <= 0}>Finalizar Compra</button>
+                          <button disabled={quantity <= 0} onClick={handleBuyProduct}>Finalizar Compra</button>
                        </footer>
                     </main>
                 </CartContent>
