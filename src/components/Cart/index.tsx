@@ -22,14 +22,18 @@ export function Cart() {
     const totalPricesF = formatMoney(totalPrices)
 
     const ids = cartItems.map((p) => {
-        p.id
+      const products = {
+        price: p.id,
+        quantity: 1,
+      }
+      return products
     })
-
+    console.log(ids)
     async function handleBuyProduct() {
-
+      
         try {
           const response = await axios.post("/api/checkout", {
-            priceId: 'testts'
+            ids
           });
     
           const { checkoutUrl } = response.data;

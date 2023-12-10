@@ -6,6 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { priceId } = req.body;
+  console.log("Aqui os dados" + priceId.)
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed." });
@@ -22,12 +23,7 @@ export default async function handler(
     success_url: successUrl,
     cancel_url: cancelUrl,
     mode: "payment",
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+    line_items: priceId,
   });
 
   return res.status(201).json({
