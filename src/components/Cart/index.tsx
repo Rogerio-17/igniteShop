@@ -33,7 +33,7 @@ export function Cart() {
       
         try {
           const response = await axios.post("/api/checkout", {
-            ids
+            prouct: ids
           });
     
           const { checkoutUrl } = response.data;
