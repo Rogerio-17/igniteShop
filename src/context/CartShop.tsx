@@ -20,6 +20,8 @@ interface CartContentProviderProps {
   children: ReactNode;
 }
 
+const IGNITESHOP_ITENS_STORAGE_KEY = "igniteShop:cartItems";
+
 export const CartContext = createContext({} as CartContextType);
 
 export function CartContextProvider({ children }: CartContentProviderProps) {

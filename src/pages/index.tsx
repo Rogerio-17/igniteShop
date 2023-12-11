@@ -11,6 +11,8 @@ import { CartButton } from "../components/CartButton";
 import { useCart } from "../hook/userCart";
 import { IProduct } from "../context/CartShop";
 import { formatMoney } from "../utils/FormatterPrice";
+import { ProductSkeleton } from "../components/ProductSkeleton";
+import { useEffect, useState } from "react";
 
 interface HomeProps {
   products: IProduct[]
@@ -39,7 +41,11 @@ export default function Home({ products }: HomeProps) {
       </Head>
 
       <HomeContainer ref={slideRef} className="keen-slider">
-        {products.map((product) => {
+
+
+
+        {
+          products.map((product) => {
           return (
             <Link
               href={`/product/${product.id}`}
@@ -61,6 +67,8 @@ export default function Home({ products }: HomeProps) {
             </Link>
           );
         })}
+          
+
       </HomeContainer>
     </>
   );

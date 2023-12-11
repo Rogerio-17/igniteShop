@@ -11,6 +11,7 @@ import Product from '../../pages/product/[id]'
 
 export function Cart() {
     const { cartItems } = useCart()
+    const [ isLoading, setIsLoading ] = useState(false)
     const quantity = cartItems.length
 
     const prices = cartItems.map((product) => {
@@ -22,17 +23,18 @@ export function Cart() {
     const totalPricesF = formatMoney(totalPrices)
 
     async function handleBuyProduct() {
-      
         try {
+          setIsLoading(true)
           const response = await axios.post("/api/checkout", {
-            products: cartItems
-          });
+          products: cartItems
+        });
     
           const { checkoutUrl } = response.data;
     
           // Para quando for direcionar o cliente para algum link fora da aplicação.
           window.location.href = checkoutUrl;
         } catch (err) {
+          setIsLoading(false)
           alert("Falha ao redirecionar ao checckout!");
         }
       }
@@ -72,7 +74,7 @@ export function Cart() {
                             <span>{totalPricesF}</span>
                           </div>
 
-                          <button disabled={quantity <= 0} onClick={handleBuyProduct}>Finalizar Compra</button>
+                          <button disabled={quantity <= 0 || isLoading} onClick={handleBuyProduct}>{isLoading ? 'Carregando...' : 'Finalizar Compra'}</button>
                        </footer>
                     </main>
                 </CartContent>
