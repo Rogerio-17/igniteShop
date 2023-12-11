@@ -21,19 +21,11 @@ export function Cart() {
     const totalPrices = prices.reduce((a, b) => a + b, 0)
     const totalPricesF = formatMoney(totalPrices)
 
-    const ids = cartItems.map((p) => {
-      const products = {
-        price: p.id,
-        quantity: 1,
-      }
-      return products
-    })
-    console.log(ids)
     async function handleBuyProduct() {
       
         try {
           const response = await axios.post("/api/checkout", {
-            prouct: ids
+            products: cartItems
           });
     
           const { checkoutUrl } = response.data;

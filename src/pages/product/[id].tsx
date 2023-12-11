@@ -13,17 +13,6 @@ import { useCart } from "../../hook/userCart";
 import { IProduct } from "../../context/CartShop";
 import { formatMoney } from "../../utils/FormatterPrice";
 
-interface ProductProps {
-  product: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    price: string;
-    description: string;
-    priceId: string;
-  };
-}
-
 export default function Product(product: IProduct) {
   const { isFallback } = useRouter();
   const { cartItems, addItemInCart } = useCart()
