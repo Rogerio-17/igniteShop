@@ -7,7 +7,7 @@ export interface IProduct {
   price: number;
   description: string;
   priceId: string;
-  productExist: boolean;
+  quantity: number;
 }
 
 interface CartContextType {
@@ -35,7 +35,7 @@ export function CartContextProvider({ children }: CartContentProviderProps) {
       price: product.price,
       description: product.description,
       priceId: product.priceId,
-      productExist: true,
+      quantity: 1,
     }
 
     setCartItem((state) => [...state, newProduct])

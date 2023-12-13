@@ -12,9 +12,13 @@ export const ItemsContainer = styled('div', {
         background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
         borderRadius: 8,
     },
+})
 
-    div: {
+
+
+export const ContentButton = styled('div', {
         display: 'flex',
+        justifyContent: 'space-between',
         flexDirection: 'column',
         alignItems: 'left',
         gap: '1rem',
@@ -27,13 +31,23 @@ export const ItemsContainer = styled('div', {
 
         button: {
             background: 'none',
-            width: '3.5rem',
             border: 'none',
             padding: 0,
             color: '$green500',
             fontWeight: 'bold',
             textAlign: 'left',
-            cursor: 'pointer'
+            cursor: 'pointer',
+
+            
+        },
+
+        div: {
+            display: 'flex',
+            justifyContent: 'space-between',
+
+            button: {
+                width: '1.5rem',
+                textAlign: 'center'
+            }
         }
-    }
 })

@@ -28,6 +28,8 @@ export default function Home({ products }: HomeProps) {
 
  const { addItemInCart, cartItems } = useCart()
 
+ console.log(cartItems)
+
  function handleAddProduct(e:MouseEvent<HTMLButtonElement>, product: IProduct) {
   e.preventDefault()
   addItemInCart(product)
@@ -61,8 +63,9 @@ export default function Home({ products }: HomeProps) {
                     <span>{formatMoney(product.price)}</span>
                   </div>
 
-                  <CartButton disabled={(cartItems.findIndex((item) => product.id === item.id)) != -1} onClick={(e) => handleAddProduct(e, product)}></CartButton>
+                  <CartButton onClick={(e) => handleAddProduct(e, product)}></CartButton>
                 </footer>
+
               </Product>
             </Link>
           );

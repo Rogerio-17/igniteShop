@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { ItemsContainer } from "./style";
+import { ItemsContainer, ContentButton } from "./style";
 import { IProduct } from "../../../context/CartShop";
 import { formatMoney } from "../../../utils/FormatterPrice";
 import { useCart } from "../../../hook/userCart";
+import { CartQuantity } from "../../CartQuantity";
 
 interface Product {
     product: IProduct
@@ -19,12 +20,16 @@ export function ItemInCart({product}: Product) {
     return(
         <ItemsContainer>
             <Image src={product.imageUrl} alt="" width={102} height={102}></Image>
+            <ContentButton>
+                 <p>{product.name}</p>
+                 <span>{priceFormated}</span>
 
-            <div>
-                <p>{product.name}</p>
-                <span>{priceFormated}</span>
-                <button onClick={() => handleDeleteProduct(product)}>Remover</button>
-            </div>
+                <div>
+                 <button onClick={() => handleDeleteProduct(product)}>Remover</button>
+                 <CartQuantity/>
+                </div>
+            </ContentButton>
+           
         </ItemsContainer>
     )
 }

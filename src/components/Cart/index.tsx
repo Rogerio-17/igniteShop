@@ -8,6 +8,7 @@ import { formatMoney } from '../../utils/FormatterPrice'
 import { useState } from 'react'
 import axios from 'axios'
 import Product from '../../pages/product/[id]'
+import { CartQuantity } from '../CartQuantity'
 
 export function Cart() {
     const { cartItems } = useCart()
@@ -76,6 +77,8 @@ export function Cart() {
 
                           <button disabled={quantity <= 0 || isLoading} onClick={handleBuyProduct}>{isLoading ? 'Carregando...' : 'Finalizar Compra'}</button>
                        </footer>
+
+                       
                     </main>
                 </CartContent>
             </Dialog.Portal>
