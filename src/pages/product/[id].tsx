@@ -16,15 +16,7 @@ import { toastify } from "../../components/ToastifySettings";
 
 export default function Product(product: IProduct) {
   const { isFallback } = useRouter();
-  const { cartItems, addItemInCart } = useCart()
-
-  const quantity = (cartItems.map((item) => {
-    if(product.id === item.id){
-      return item.quantity
-    }
-  }))
-
-  const priceFormated = formatMoney(product.price)
+  const { addItemInCart } = useCart()
 
   if (isFallback) {
     return (
@@ -42,11 +34,7 @@ export default function Product(product: IProduct) {
     addItemInCart(product)
     toastify("Item adicionado na sacola!")
   }
-
-/*
-
-*/
-
+  
   return (
     <>
       <Head>
@@ -56,15 +44,10 @@ export default function Product(product: IProduct) {
       <ProductContainer>
         <ImageContainer>
           <Image src={product.imageUrl} alt="" width={520} height={520} />
-          {
-            quantity[0] > 0 ? <h2>{quantity}x</h2> : <></>
-          }
         </ImageContainer>
 
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{priceFormated}</span>
-
           <p>{product.description}</p>
 
           <button onClick={handleAddProduct}>Colocar na sacola</button>

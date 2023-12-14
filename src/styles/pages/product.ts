@@ -1,4 +1,4 @@
-import { styled } from ".."
+import { keyframes, styled } from ".."
 
 export const ProductContainer = styled('main', {
     display: 'grid',
@@ -83,6 +83,16 @@ export const ProductDetails = styled('div', {
 
 })
 
+const skeletonAnimation = keyframes({
+    '0%': {
+        backgroundPosition: '-200px 0',
+    },
+
+    '100%': {
+        backgroundPosition: 'calc(200px + 100%) 0'
+    }
+})
+
 
 export const LoadPage = styled('div', {
     maxWidth: 1180,
@@ -94,7 +104,11 @@ export const LoadPage = styled('div', {
     '.main': {
         width: '528px',
         height: '34.875rem',
-        background: '$gray800',
+        animation: `${skeletonAnimation} 1300ms ease-in-out infinite`,
+        backgroundColor: '$gray800',
+        backgroundImage: 'linear-gradient(90deg, $gray800, $gray700, $gray800)',
+        backgroundSize: '200px 100%',
+        backgroundRepeat: 'no-repeat',
         borderRadius: 8,
     },
 
@@ -107,14 +121,22 @@ export const LoadPage = styled('div', {
     '.information': {
         width: '528px',
         height: '14.875rem',
-        background: '$gray800',
-        borderRadius: 8
+        animation: `${skeletonAnimation} 1300ms ease-in-out infinite`,
+        backgroundColor: '$gray800',
+        backgroundImage: 'linear-gradient(90deg, $gray800, $gray700, $gray800)',
+        backgroundSize: '200px 100%',
+        backgroundRepeat: 'no-repeat',
+        borderRadius: 8,
     },
 
     '.bnt': {
         width: '528px',
         height: '3.875rem',
-        background: '$gray800',
+        animation: `${skeletonAnimation} 1300ms ease-in-out infinite`,
+        backgroundColor: '$gray800',
+        backgroundImage: 'linear-gradient(90deg, $gray800, $gray700, $gray800)',
+        backgroundSize: '200px 100%',
+        backgroundRepeat: 'no-repeat',
         borderRadius: 8,
     },
 
