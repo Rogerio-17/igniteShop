@@ -17,7 +17,12 @@ export default function Product(product: IProduct) {
   const { isFallback } = useRouter();
   const { cartItems, addItemInCart } = useCart()
 
-  const productInCart = (cartItems.findIndex((item) => product.id === item.id)) != -1
+  const quantity = (cartItems.map((item) => {
+    if(product.id === item.id){
+      return item.quantity
+    }
+  }))
+
   const priceFormated = formatMoney(product.price)
 
   if (isFallback) {
@@ -49,6 +54,9 @@ export default function Product(product: IProduct) {
       <ProductContainer>
         <ImageContainer>
           <Image src={product.imageUrl} alt="" width={520} height={520} />
+          {
+            quantity[0] > 0 ? <h2>{quantity}x</h2> : <></>
+          }
         </ImageContainer>
 
         <ProductDetails>
@@ -57,7 +65,7 @@ export default function Product(product: IProduct) {
 
           <p>{product.description}</p>
 
-          <button disabled={productInCart} onClick={handleAddProduct}>Colocar na sacola</button>
+          <button onClick={handleAddProduct}>Colocar na sacola</button>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -97,6 +105,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         price: priceSelected[0].unit_amount_decimal,
         description: product.description,
         priceId: priceId,
+        quantity: 1
     },
     revalidate: 60 * 60 * 1, // 1 hour
   };

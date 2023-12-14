@@ -25,7 +25,14 @@ export const ImageContainer = styled('div', {
 
     img: {
         objectFit: 'cover'
-    }
+    },
+
+    
+    h2: {
+        position: 'absolute',
+        marginLeft: '30rem',
+        color: '$gray900'
+    },
 
 })
 
