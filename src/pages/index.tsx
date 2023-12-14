@@ -11,6 +11,7 @@ import { CartButton } from "../components/CartButton";
 import { IProduct } from "../context/CartShop";
 import { formatMoney } from "../utils/FormatterPrice";
 import { useCart } from "../hook/userCart";
+import { toastify } from "../components/ToastifySettings";
 
 interface HomeProps {
   products: IProduct[]
@@ -24,14 +25,13 @@ export default function Home({ products }: HomeProps) {
     },
   });
 
- const { addItemInCart, cartItems } = useCart()
-
- console.log(cartItems)
+ const { addItemInCart } = useCart()
 
  function handleAddProduct(e:MouseEvent<HTMLButtonElement>, product: IProduct) {
   e.preventDefault()
   addItemInCart(product)
   // Adiconar algo para deixar o usuario ciente que foi feito aadição do item no carrinho
+  toastify("Item adicionado na sacola!")
  }
 
   return (

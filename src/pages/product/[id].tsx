@@ -12,6 +12,7 @@ import Head from "next/head";
 import { useCart } from "../../hook/userCart";
 import { IProduct } from "../../context/CartShop";
 import { formatMoney } from "../../utils/FormatterPrice";
+import { toastify } from "../../components/ToastifySettings";
 
 export default function Product(product: IProduct) {
   const { isFallback } = useRouter();
@@ -39,6 +40,7 @@ export default function Product(product: IProduct) {
 
   function handleAddProduct() {
     addItemInCart(product)
+    toastify("Item adicionado na sacola!")
   }
 
 /*

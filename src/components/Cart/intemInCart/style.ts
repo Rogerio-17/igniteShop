@@ -49,6 +49,11 @@ export const ContentButton = styled('div', {
             button: {
                 width: '1.5rem',
                 textAlign: 'center'
-            }
+            },
+        },
+
+        p: {
+            display: 'flex',
+            alignItems: 'center'
         }
 })

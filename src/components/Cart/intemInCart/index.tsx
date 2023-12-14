@@ -4,6 +4,7 @@ import { IProduct } from "../../../context/CartShop";
 import { formatMoney } from "../../../utils/FormatterPrice";
 import { useCart } from "../../../hook/userCart";
 import { CartQuantity } from "../../CartQuantity";
+import { toastify } from "../../ToastifySettings";
 
 interface Product {
     product: IProduct
@@ -15,6 +16,7 @@ export function ItemInCart({product}: Product) {
 
     function handleDeleteProduct(product: IProduct) {
         removeProduct(product)
+        toastify("Item removido da sacola :(")
     }
 
     return(
@@ -26,7 +28,10 @@ export function ItemInCart({product}: Product) {
 
                 <div>
                  <button onClick={() => handleDeleteProduct(product)}>Remover</button>
-                 <CartQuantity key={product.id} id={product.id} quantity={product.quantity}/>
+                  <div>
+                   <p>Qtd:</p>
+                   <CartQuantity key={product.id} id={product.id} quantity={product.quantity}/>
+                  </div>
                 </div>
             </ContentButton>
            
