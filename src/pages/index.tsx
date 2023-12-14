@@ -8,11 +8,9 @@ import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { CartButton } from "../components/CartButton";
-import { useCart } from "../hook/userCart";
 import { IProduct } from "../context/CartShop";
 import { formatMoney } from "../utils/FormatterPrice";
-import { ProductSkeleton } from "../components/ProductSkeleton";
-import { useEffect, useState } from "react";
+import { useCart } from "../hook/userCart";
 
 interface HomeProps {
   products: IProduct[]
@@ -100,7 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
       price: price,
       description: product.description,
       priceId: priceSelected[0].id,
-      productExist: false,
+      quantity: 1,
     }
   });
 

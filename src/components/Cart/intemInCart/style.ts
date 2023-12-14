@@ -23,6 +23,7 @@ export const ContentButton = styled('div', {
         alignItems: 'left',
         gap: '1rem',
         color: '$gray300',
+        width: '100%',
 
         span: {
             color: '$gray100',

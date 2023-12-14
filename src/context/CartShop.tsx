@@ -1,4 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
+import { produce } from "immer";
+
 
 export interface IProduct {
   id: number;
@@ -14,13 +16,12 @@ interface CartContextType {
     cartItems: IProduct[];
     addItemInCart: (product: IProduct) => void;
     removeProduct: (product: IProduct) => void;
+    cartQuantity: (pid: number, type: 'increase' | 'decrease') => void;
 }
 
 interface CartContentProviderProps {
   children: ReactNode;
 }
-
-const IGNITESHOP_ITENS_STORAGE_KEY = "igniteShop:cartItems";
 
 export const CartContext = createContext({} as CartContextType);
 
@@ -28,19 +29,39 @@ export function CartContextProvider({ children }: CartContentProviderProps) {
   const [cartItems, setCartItem] = useState<IProduct[]>([]);
 
   function addItemInCart(product: IProduct) {
-    const newProduct = {
-      id: product.id,
-      name: product.name,
-      imageUrl: product.imageUrl,
-      price: product.price,
-      description: product.description,
-      priceId: product.priceId,
-      quantity: 1,
-    }
+    const productExists = cartItems.findIndex((item) => item.id === product.id)
 
-    setCartItem((state) => [...state, newProduct])
+    const newProduct = produce(cartItems, (draft) => {
+      console.log(productExists)
+      if(productExists < 0) {
+        draft.push(product)
+      } else {
+        draft[productExists].quantity += 1
+      }
+    })
 
+    setCartItem(newProduct)
   }
+
+
+  function cartQuantity(pid: number, type: 'increase' | 'decrease') {
+
+    const newCart = produce(cartItems, (draft) => {
+      const productExists = cartItems.findIndex(
+        (cartItem) => cartItem.id === pid
+      );
+
+      if (productExists >= 0) {
+        const item = draft[productExists];
+        draft[productExists].quantity =
+          type === "increase" ? item.quantity + 1 : item.quantity - 1;
+      }
+    });
+
+    setCartItem(newCart)
+  }
+
+
 
   function removeProduct(product: IProduct) {
     const productDeleted = cartItems.filter((item) => item.id !== product.id)
@@ -54,5 +75,6 @@ export function CartContextProvider({ children }: CartContentProviderProps) {
     cartItems,
     addItemInCart,
     removeProduct,
+    cartQuantity,
   }}>{children}</CartContext.Provider>;
 }

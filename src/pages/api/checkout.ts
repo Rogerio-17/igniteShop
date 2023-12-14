@@ -25,7 +25,7 @@ export default async function handler(
     mode: "payment",
     line_items: products.map((product) => ({
       price: product.priceId,
-      quantity: 1,
+      quantity: product.quantity,
     })),
   });
 

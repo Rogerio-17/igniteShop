@@ -46,6 +46,11 @@ export const ImagesContainer = styled('section', {
 
     'div + div': {
         marginLeft: '-5%'
+    },
+
+    h2: {
+        position: 'absolute',
+        marginTop: '-11rem'
     }
 })
 

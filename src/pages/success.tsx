@@ -8,11 +8,15 @@ import Head from "next/head";
 
 interface SuccessProps {
   customerName: string;
-  productsImages: string[]
+  productsImages: {
+    productImage: string,
+    quantity: number
+  }[]
 }
 
 export default function Success({ customerName, productsImages }: SuccessProps) {
-  console.log(productsImages)
+  const quantitys = productsImages.map((i) => i.quantity)
+  const totalItems = quantitys.reduce((a, b) => a + b, 0) 
   return (
     <>
       <Head>
@@ -26,7 +30,8 @@ export default function Success({ customerName, productsImages }: SuccessProps) 
         {
           productsImages.map((img, i) => (
           <ImageContainer key={i}>
-             <Image src={img} alt="" width={120} height={120}></Image>
+             <Image src={img.productImage} alt="" width={120} height={120}></Image>
+             <h2>{img.quantity}x</h2>
           </ImageContainer>
           ))
         }
@@ -35,7 +40,7 @@ export default function Success({ customerName, productsImages }: SuccessProps) 
 
         <p>
           Uhuul!!! <strong>{customerName}</strong>, sua{" "}
-          compra de {productsImages.length} {productsImages.length > 1 ? 'camisetas' : 'camiseta'} já está a caminho da sua casa. 
+          compra de <strong>{totalItems} </strong>{totalItems > 1 ? 'camisetas' : 'camiseta'} já está a caminho da sua casa. 
         </p>
         <Link href="/"> Voltar ao catalogo </Link>
       </SuccessContainer>
@@ -58,17 +63,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId, {
     expand: ["line_items", "line_items.data.price.product"],
   });
-
+  
   const customerName = session.customer_details.name;
   const productsImages = session.line_items.data.map(item => {
     const product = item.price.product as Stripe.Product;
-    return product.images[0]
+    return {
+      productImage: product.images[0],
+      quantity: item.quantity
+    }
   })
 
   return {
     props: {
       customerName,
-      productsImages
+      productsImages,
     },
   };
 };

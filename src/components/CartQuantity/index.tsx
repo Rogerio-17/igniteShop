@@ -1,11 +1,27 @@
-import { CountCoffeContainer } from "./style";
+import { useCart } from "../../hook/userCart";
+import { CartCount } from "./style";
 
-export function CartQuantity() {
+interface CartQuantityProps {
+  quantity: number
+  id: number
+}
+
+export function CartQuantity({id, quantity} : CartQuantityProps) {
+  const {cartQuantity} = useCart()
+
+  function handleIncrease() {
+    cartQuantity(id, "increase")
+  }
+
+  function handleDecrease() {
+    cartQuantity(id, "decrease")
+  }
+
     return (
-        <CountCoffeContainer>
-          <button type="button" >-</button>
-          <input type="text" value={1}/>
-          <button>+</button>
-        </CountCoffeContainer>
+        <CartCount>
+          <button type="button" disabled={quantity <= 1} onClick={handleDecrease} >-</button>
+          <input type="text" value={quantity}/>
+          <button type="button" onClick={handleIncrease}>+</button>
+        </CartCount>
     )
 }

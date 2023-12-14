@@ -3,12 +3,10 @@ import { CartClose, CartContent } from './style'
 import { X } from 'phosphor-react'
 import { CartButton } from '../CartButton'
 import { ItemInCart } from './intemInCart'
-import { useCart } from '../../hook/userCart'
 import { formatMoney } from '../../utils/FormatterPrice'
 import { useState } from 'react'
 import axios from 'axios'
-import Product from '../../pages/product/[id]'
-import { CartQuantity } from '../CartQuantity'
+import { useCart } from '../../hook/userCart'
 
 export function Cart() {
     const { cartItems } = useCart()
@@ -16,7 +14,7 @@ export function Cart() {
     const quantity = cartItems.length
 
     const prices = cartItems.map((product) => {
-        const priceTotal = product.price * 1
+        const priceTotal = product.price * product.quantity
         return priceTotal
       })
 

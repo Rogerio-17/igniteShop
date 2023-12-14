@@ -10,7 +10,7 @@ interface Product {
 }
 
 export function ItemInCart({product}: Product) {
-    const priceFormated = formatMoney(product.price)
+    const priceFormated = formatMoney(product.price * product.quantity)
     const {removeProduct} = useCart()
 
     function handleDeleteProduct(product: IProduct) {
@@ -26,7 +26,7 @@ export function ItemInCart({product}: Product) {
 
                 <div>
                  <button onClick={() => handleDeleteProduct(product)}>Remover</button>
-                 <CartQuantity/>
+                 <CartQuantity key={product.id} id={product.id} quantity={product.quantity}/>
                 </div>
             </ContentButton>
            

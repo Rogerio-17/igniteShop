@@ -1,6 +1,6 @@
 import { styled } from "../../styles";
 
-export const CountCoffeContainer = styled('div', {
+export const CartCount = styled('div', {
     display: 'flex',
     flexDirection: 'row',
 
