@@ -12,6 +12,7 @@ import { IProduct } from "../context/CartShop";
 import { formatMoney } from "../utils/FormatterPrice";
 import { useCart } from "../hook/userCart";
 import { toastify } from "../components/ToastifySettings";
+import React from "react";
 
 interface HomeProps {
   products: IProduct[]
@@ -27,7 +28,7 @@ export default function Home({ products }: HomeProps) {
 
  const { addItemInCart } = useCart()
 
- function handleAddProduct(e:MouseEvent<HTMLButtonElement>, product: IProduct) {
+ function handleAddProduct(e: React.MouseEvent<HTMLButtonElement>, product: IProduct) {
   e.preventDefault()
   addItemInCart(product)
   // Adiconar algo para deixar o usuario ciente que foi feito aadição do item no carrinho
